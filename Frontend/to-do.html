@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"rel="stylesheet">
+    <link rel="stylesheet" href="to-do.css">
+</head>
+<body>
+    <input type="text" id="taskInput" placeholder="What are we doing today...">
+    <button id="addBtn">Add</button>
+    <label for="priority">Filter Tasks</label>
+    <select name="priority" id="priority">
+        <option value="high">High</option>
+        <option value="moderate">Moderate</option>
+        <option value="low">Low</option>
+    </select>
+    <ul id="to-doList">
+        <div id="list-item" class="list-item">
+            <li class="task">Read about DSA</li>
+            <button class="delete" id="delete">
+                <span class="material-symbols-outlined deleteIcon">delete</span>
+            </button>
+        </div>
+    </ul>
+    <script src="to-do.js"></script>
+</body>
+</html>
