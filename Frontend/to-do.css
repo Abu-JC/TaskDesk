@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: system-ui, -apple-system,'Segoe UI', sans-serif;
 }
 
 body {
@@ -150,8 +150,8 @@ label[for="priority"] {
 
 .delete:hover, 
 #delete:hover {
-  color: #1e293b;
-  background-color: #f1f5f9;
+  color: #f5f1f1;
+  background-color: #d31717;
 }
 
 .deleteIcon {

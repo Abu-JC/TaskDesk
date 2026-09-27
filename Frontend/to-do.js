@@ -1,4 +1,6 @@
-const taskList = document.getElementById("to-doList")
+const taskList = document.getElementById("to-doList");
+const taskInput = document.getElementById("taskInput");
+const addBtn = document.getElementById("addBtn");
 async function getTodos() {
     const response = await fetch(`http://localhost:8000/todos`)
     const todos = await response.json()
@@ -26,7 +28,22 @@ async function createTask(title) {
                 title:title
             })
         })
-        const todo = await response.json();
-        console(todo);
+        const newTodo = await response.json();
+        const wrapper = document.createElement('div');
+    wrapper.className = 'list-item';
+    wrapper.innerHTML = `
+        <li class="task">${newTodo.title}</li>
+        <button class="delete">
+            <span class="material-symbols-outlined deleteIcon">delete</span>
+        </button>
+    `;
+    taskList.prepend(wrapper);
     }
+    addBtn.addEventListener("click",async ()=>{
+        const taskTitle=taskInput.value.trim()
+        if(taskTitle!==""){
+            await createTask(taskTitle)
+            taskInput.value= ""
+        }     
+    })
 getTodos()

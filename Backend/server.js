@@ -43,7 +43,7 @@ const server = http.createServer(async (req, res) => {
 
     req.on("end", async () => {
       try {
-        // Parse raw body string into a JavaScript object
+       
         const parsedData = JSON.parse(body)
         const title = parsedData.title
 
@@ -59,7 +59,7 @@ const server = http.createServer(async (req, res) => {
         })
         res.end(JSON.stringify(result.rows[0]))
       } catch (err) {
-        // Send 400 Bad Request if JSON parsing fails
+        
         res.writeHead(400, {
           "content-type": "application/json",
           "access-control-allow-origin": "*"
