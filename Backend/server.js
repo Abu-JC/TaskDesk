@@ -9,11 +9,11 @@ const server = http.createServer(async (req, res) => {
     const headers = {
         "content-type": "application/json",
         "access-control-allow-origin": "*",
-        "access-control-allow-methods": "GET, POST, OPTIONS",
+        "access-control-allow-methods": "GET, POST, DELETE, OPTIONS",
         "access-control-allow-headers": "Content-Type"
     }
 
-    // Handle CORS preflight checkA
+    
     if (req.method === "OPTIONS") {
         res.writeHead(204, headers)
         res.end()
@@ -53,20 +53,34 @@ const server = http.createServer(async (req, res) => {
         )
 
         // Only send 201 if JSON parsing AND database query succeed
-        res.writeHead(201, {
-          "content-type": "application/json",
-          "access-control-allow-origin": "*"
-        })
+        res.writeHead(201,headers);
         res.end(JSON.stringify(result.rows[0]))
       } catch (err) {
         
-        res.writeHead(400, {
-          "content-type": "application/json",
-          "access-control-allow-origin": "*"
-        })
+        res.writeHead(400,headers);
         res.end(JSON.stringify({ error: err.message }))
       }
     })
+  }
+  else if(req.url.startsWith("/todos/") && req.method=="DELETE"){
+    const id = req.url.split("/")[2];
+    try{
+      const result = await pool.query(
+        "DELETE FROM tasks WHERE id = $1 RETURNING *",[id]
+      );
+      if(result.rowCount === 0){
+        res.writeHead(404,headers);
+        res.end(JSON.stringify({error:"Task not Found"}));
+      }
+      else{
+        res.writeHead(200,headers);
+        res.end(JSON.stringify({message:"Task deleted successfully"}))
+      }
+    }//event delegation
+    catch(err){
+      res.writeHead(500,headers);
+      res.end(JSON.stringify({error:err.message}))
+    }
   }
     
     else {
