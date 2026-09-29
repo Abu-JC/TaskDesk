@@ -8,9 +8,10 @@ async function getTodos() {
     todos.forEach(todo => {
         const wrapper = document.createElement('div');
         wrapper.className = 'list-item';
+        wrapper.dataset.id = todo.id;
         wrapper.innerHTML=`
             <li class="task">${todo.title}</li>
-            <button class="delete" id="delete">
+            <button class="delete" >
                 <span class="material-symbols-outlined deleteIcon">delete</span>
             </button>
             `
@@ -31,6 +32,7 @@ async function createTask(title) {
         const newTodo = await response.json();
         const wrapper = document.createElement('div');
     wrapper.className = 'list-item';
+    wrapper.dataset.id = newTodo.id;
     wrapper.innerHTML = `
         <li class="task">${newTodo.title}</li>
         <button class="delete">
@@ -46,4 +48,30 @@ async function createTask(title) {
             taskInput.value= ""
         }     
     })
+    async function deleteTask(id,wrapperElement){
+        try {
+            const response = await fetch(`http://localhost:8000/todos/${id}`,
+                {method:"DELETE"}
+            );
+            if(response.ok){
+                wrapperElement.remove();                
+                }
+                else{
+                    console.error("Failed to delete task from DB")
+                }
+        } catch (error) {
+            console.error("Error deleting task:",error);
+        }
+    }
+    taskList.addEventListener("click",(e)=>{
+        const deleteBtn = e.target.closest(".delete");
+        if(deleteBtn){
+            const wrapper = deleteBtn.closest(".list-item");
+            const taskId = wrapper.dataset.id;
+            if(taskId){
+                deleteTask(taskId,wrapper);
+            }
+        }
+    });
+        
 getTodos()
