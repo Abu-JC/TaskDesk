@@ -5,9 +5,8 @@ import { fileURLToPath } from 'url'
 import pool from './db.js'
 import 'dotenv/config'
 
-const PORT = process.env.SERVER_PORT || 5000
+const PORT = process.env.SERVER_PORT || 8000
 
-// 1. Resolve directory paths for ES Modules
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const FRONTEND_DIR = path.join(__dirname, '../Frontend')
@@ -26,7 +25,7 @@ const server = http.createServer(async (req, res) => {
   const headers = {
     "content-type": "application/json",
     "access-control-allow-origin": "*",
-    "access-control-allow-methods": "GET, POST, DELETE, OPTIONS",
+    "access-control-allow-methods": "GET, POST, DELETE, PUT, OPTIONS",
     "access-control-allow-headers": "Content-Type"
   }
 
@@ -74,6 +73,37 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify({ error: err.message }))
       }
     })
+  }
+  else if (req.url.startsWith("/todos/") && req.method === "PUT") {
+    const id = req.url.split("/")[2];
+    let body = "";
+
+    req.on("data", chunk => {
+      body += chunk.toString();
+    });
+
+    req.on("end", async () => {
+      try {
+        const parsedData = JSON.parse(body);
+        const title = parsedData.title;
+
+        const result = await pool.query(
+          "UPDATE tasks SET title = $1 WHERE id = $2 RETURNING *",
+          [title, id]
+        );
+
+        if (result.rowCount === 0) {
+          res.writeHead(404, headers);
+          res.end(JSON.stringify({ error: "Task not found" }));
+        } else {
+          res.writeHead(200, headers);
+          res.end(JSON.stringify(result.rows[0]));
+        }
+      } catch (err) {
+        res.writeHead(400, headers);
+        res.end(JSON.stringify({ error: err.message }));
+      }
+    });
   }
 
   else if (req.url.startsWith("/todos/") && req.method === "DELETE") {

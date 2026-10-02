@@ -1,9 +1,8 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, -apple-system,'Segoe UI', sans-serif;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 body {
@@ -17,13 +16,11 @@ body {
   padding: 2rem 1rem;
 }
 
-/* Container Width Constraint */
 body > * {
   width: 100%;
   max-width: 480px;
 }
 
-/* Input Controls & Header Styling */
 #taskInput {
   width: 100%;
   padding: 0.85rem 1.1rem;
@@ -42,7 +39,6 @@ body > * {
   box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
 }
 
-/* Add Button */
 #addBtn {
   width: 100%;
   padding: 0.85rem;
@@ -94,7 +90,6 @@ label[for="priority"] {
   border-color: #38bdf8;
 }
 
-/* Task List */
 #to-doList {
   list-style: none;
   display: flex;
@@ -102,12 +97,12 @@ label[for="priority"] {
   gap: 0.75rem;
 }
 
-/* Individual List Item Container */
 #list-item,
 .list-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
   background-color: #ffffff;
   padding: 0.85rem 1.1rem;
   border-radius: 10px;
@@ -131,11 +126,14 @@ label[for="priority"] {
   font-weight: 500;
   word-break: break-word;
   padding-right: 0.75rem;
+  flex-grow: 1;
 }
 
-/* Delete Button */
 .delete, 
-#delete {
+#delete,
+.edit,
+.save,
+.cancel {
   background: transparent;
   border: none;
   color: #64748b;
@@ -150,10 +148,37 @@ label[for="priority"] {
 
 .delete:hover, 
 #delete:hover {
-  color: #f5f1f1;
-  background-color: #d31717;
+  color: #ffffff;
+  background-color: #ef4444;
 }
 
-.deleteIcon {
+.edit:hover {
+  color: #0284c7;
+  background-color: #e0f2fe;
+}
+
+.save:hover {
+  color: #ffffff;
+  background-color: #22c55e;
+}
+
+.cancel:hover {
+  color: #ffffff;
+  background-color: #64748b;
+}
+
+.deleteIcon,
+.editIcon {
   font-size: 1.35rem;
+}
+
+.edit-input {
+  flex-grow: 1;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
+  border: 1.5px solid #38bdf8;
+  border-radius: 6px;
+  outline: none;
+  color: #1e293b;
+  background-color: #f8fafc;
 }
