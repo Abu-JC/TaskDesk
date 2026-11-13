@@ -1,0 +1,2 @@
+ALTER TABLE tasks 
+ADD COLUMN IF NOT EXISTS uuid UUID DEFAULT gen_random_uuid() UNIQUE;

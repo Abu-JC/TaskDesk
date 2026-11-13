@@ -1,0 +1,1 @@
+ALTER TABLE tasks ADD COLUMN status VARCHAR(20) DEFAULT 'todo';

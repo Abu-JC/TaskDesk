@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-do List</title>
-    <link rel="shortcut icon" href="../assets/To-Do List App Icon.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/To Do Icon.jpg" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"rel="stylesheet">
     <link rel="stylesheet" href="to-do.css">
 </head>
@@ -12,19 +12,29 @@
     <input type="text" id="taskInput" placeholder="What are we doing today...">
     <button id="addBtn">Add</button>
     <label for="priority">Filter Tasks</label>
-    <select name="priority" id="priority">
-        <option value="high">High</option>
-        <option value="moderate">Moderate</option>
-        <option value="low">Low</option>
-    </select>
+<select name="priority" id="priority">
+    <option value="all">All Tasks</option>
+    <option value="todo">Todo</option>
+    <option value="in_progress">In Progress</option>
+    <option value="completed">Completed</option>
+    <option value="canceled">Canceled</option>
+</select>
+<div id="sort-container" style="margin-top: 10px;">
+    <button id="sortAscBtn">Ascending (Oldest First)</button>
+    <button id="sortDescBtn">Descending (Newest First)</button>
+</div>
     <ul id="to-doList">
         <div id="list-item" class="list-item">
-            <li class="task">Read about DSA</li>
-            <button class="delete" id="delete">
-                <span class="material-symbols-outlined deleteIcon">delete</span>
-            </button>
+            <li class="task">Read DSA </li>
+                <button class="edit">
+                    <span class="material-symbols-outlined editIcon">edit</span>
+                </button>
+                <button class="delete">
+                    <span class="material-symbols-outlined deleteIcon">delete</span>
+                </button>
         </div>
     </ul>
+    <div id="pagination-container" class="pagination"></div>
     <script src="to-do.js"></script>
 </body>
 </html>

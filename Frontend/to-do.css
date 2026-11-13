@@ -1,4 +1,4 @@
-* {
+*{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -21,7 +21,8 @@ body > * {
   max-width: 480px;
 }
 
-#taskInput {
+#taskInput,
+#descInput {
   width: 100%;
   padding: 0.85rem 1.1rem;
   font-size: 1rem;
@@ -31,10 +32,16 @@ body > * {
   border-radius: 10px;
   outline: none;
   margin-bottom: 0.85rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: 0.2s ease;
 }
 
-#taskInput:focus {
+#descInput {
+  font-size: 0.9rem;
+  padding: 0.7rem 1.1rem;
+}
+
+#taskInput:focus,
+#descInput:focus {
   border-color: #38bdf8;
   box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
 }
@@ -50,7 +57,7 @@ body > * {
   border-radius: 10px;
   cursor: pointer;
   margin-bottom: 1.25rem;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition: 0.2s ease;
 }
 
 #addBtn:hover {
@@ -74,7 +81,7 @@ label[for="priority"] {
 
 #priority {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1.0rem;
   font-size: 0.95rem;
   color: #1e293b;
   background-color: #ffffff;
@@ -83,7 +90,7 @@ label[for="priority"] {
   outline: none;
   margin-bottom: 1.5rem;
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: 0.2s ease;
 }
 
 #priority:focus {
@@ -96,19 +103,49 @@ label[for="priority"] {
   flex-direction: column;
   gap: 0.75rem;
 }
+/* Sort Container & Buttons */
+#sort-container {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+#sort-container button {
+  flex: 1;
+  padding: 0.6rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #475569;
+  background-color: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+#sort-container button:hover {
+  color: #0284c7;
+  border-color: #38bdf8;
+  background-color: #e0f2fe;
+}
+
+#sort-container button:active {
+  transform: scale(0.98);
+}
 
 #list-item,
 .list-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.75rem;
   background-color: #ffffff;
   padding: 0.85rem 1.1rem;
   border-radius: 10px;
   border: 1px solid #f1f5f9;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: 0.15s ease;
+  border-left: 4px solid #cbd5e1; /* Default neutral border */
 }
 
 #list-item:hover,
@@ -118,17 +155,84 @@ label[for="priority"] {
   border-color: #38bdf8;
 }
 
-#list-item li,
-.list-item li {
-  list-style: none;
+/* Status-Specific Item Styling */
+.list-item.status-todo {
+  border-left-color: #cbd5e1;
+}
+
+.list-item.status-in_progress {
+  border-left-color: #38bdf8;
+}
+
+.list-item.status-completed {
+  border-left-color: #22c55e;
+  opacity: 0.85;
+}
+
+.list-item.status-completed .task {
+  color: #94a3b8;
+}
+
+.list-item.status-canceled {
+  border-left-color: #ef4444;
+  opacity: 0.7;
+}
+
+.list-item.status-canceled .task,
+.list-item.status-canceled .description {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+.task-number {
+  font-weight: 600;
+  color: #1f1e1e;
+  margin-right: 10px;
+  min-width: 24px;
+  text-align: right;
+}
+
+/* Status Dropdown Styling */
+.status-select {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #1e293b;
+  background-color: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.status-select:focus {
+  border-color: #38bdf8;
+}
+
+/* Task Content Container */
+.task-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex-grow: 1;
+}
+
+.task {
   font-size: 1rem;
   color: #1e293b;
   font-weight: 500;
   word-break: break-word;
-  padding-right: 0.75rem;
-  flex-grow: 1;
+  transition: 0.2s ease;
 }
 
+/* Task Description */
+.description {
+  font-size: 0.85rem;
+  color: #64748b;
+  word-break: break-word;
+}
+
+/* Action Buttons */
 .delete, 
 #delete,
 .edit,
@@ -172,8 +276,17 @@ label[for="priority"] {
   font-size: 1.35rem;
 }
 
-.edit-input {
+/* Edit Mode Layout & Inputs */
+.edit-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
   flex-grow: 1;
+}
+
+.edit-input,
+.edit-desc-input {
+  width: 100%;
   padding: 0.4rem 0.6rem;
   font-size: 0.95rem;
   border: 1.5px solid #38bdf8;
@@ -181,4 +294,47 @@ label[for="priority"] {
   outline: none;
   color: #1e293b;
   background-color: #f8fafc;
+}
+
+.edit-desc-input {
+  font-size: 0.85rem;
+  border-color: #cbd5e1;
+}
+
+.edit-desc-input:focus {
+  border-color: #38bdf8;
+}
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.25rem;
+  padding: 0.5rem 0;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #38bdf8;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #0284c7;
+}
+
+.pagination button:disabled {
+  background-color: #cbd5e1;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #64748b;
 }
